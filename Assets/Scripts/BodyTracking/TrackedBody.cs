@@ -12,7 +12,13 @@ namespace Born.InterviewTest.BodyTracking
         [SerializeField] private Transform head;
         [SerializeField] private Transform rightHand;
         [SerializeField] private Transform leftHand;
+        
+        public static TrackedBody Instance { get; private set; }
 
+        private void Awake()
+        {
+            Instance = this;
+        }
         /// <summary>
         /// Returns the Pose of a joint of this TrackedBody in world space.
         /// </summary>

@@ -9,6 +9,9 @@ namespace Born.InterviewTest.ControlledDevice
     /// </summary>
     public class ControlledDeviceOutput : MonoBehaviour
     {
+        public Transform outputObject;
+        public Transform host; 
+        private Quaternion _rotationData;
         private void Update()
         {
             UpdateRotation();
@@ -18,6 +21,8 @@ namespace Born.InterviewTest.ControlledDevice
         {
             // Complete this method to rotate this object as per the rotation data imagined to be received 
             // from the controlled device.
+            _rotationData = host.transform.rotation;
+            outputObject.rotation = _rotationData;
         }
     }
 }

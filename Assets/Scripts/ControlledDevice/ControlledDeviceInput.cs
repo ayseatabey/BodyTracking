@@ -1,4 +1,6 @@
+using Born.InterviewTest.BodyTracking;
 using UnityEngine;
+using Joint = Born.InterviewTest.BodyTracking.Joint;
 
 namespace Born.InterviewTest.ControlledDevice
 {
@@ -9,6 +11,8 @@ namespace Born.InterviewTest.ControlledDevice
     /// </summary>
     public class ControlledDeviceInput : MonoBehaviour
     {
+        public Transform hostObject;
+
         private void Update()
         {
             UpdateRotation();
@@ -16,7 +20,13 @@ namespace Born.InterviewTest.ControlledDevice
 
         private void UpdateRotation()
         {
-            // Complete this method to rotate this object towards Joint.Head of a TrackedBody.
+            if (TrackedBody.Instance)
+            {
+                var headPosition = TrackedBody.Instance.GetJointPose(Joint.Head);
+                var directionVector = (headPosition.position - hostObject.position).normalized;
+                var targetRotation = Quaternion.LookRotation(directionVector);
+                hostObject.rotation = Quaternion.Slerp(hostObject.rotation, targetRotation, Time.deltaTime);
+            }
         }
     }
 }
